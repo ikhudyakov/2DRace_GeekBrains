@@ -1,7 +1,10 @@
 ﻿using System;
 
-public interface IReadOnlySubscriptionAction
+namespace Tools
 {
-    void SubscribeOnChange(Action subscriptionAction);
-    void UnSubscriptionOnChange(Action unsubscriptionAction);
+    public interface IReadOnlySubscriptionAction
+    {
+        void SubscribeOnChange(Action subscriptionAction);
+        void UnSubscriptionOnChange(Action unsubscriptionAction);
+    }
 }

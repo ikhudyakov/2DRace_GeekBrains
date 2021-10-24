@@ -1,21 +1,24 @@
 ﻿using System;
 
-internal class SubscriptionAction : IReadOnlySubscriptionAction
+namespace Tools
 {
-    private Action _action;
-
-    public void Invoke()
+    internal class SubscriptionAction : IReadOnlySubscriptionAction
     {
-        _action?.Invoke();
-    }
+        private Action _action;
 
-    public void SubscribeOnChange(Action subscriptionAction)
-    {
-        _action += subscriptionAction;
-    }
+        public void Invoke()
+        {
+            _action?.Invoke();
+        }
 
-    public void UnSubscriptionOnChange(Action unsubscriptionAction)
-    {
-        _action -= unsubscriptionAction;
+        public void SubscribeOnChange(Action subscriptionAction)
+        {
+            _action += subscriptionAction;
+        }
+
+        public void UnSubscriptionOnChange(Action unsubscriptionAction)
+        {
+            _action -= unsubscriptionAction;
+        }
     }
 }

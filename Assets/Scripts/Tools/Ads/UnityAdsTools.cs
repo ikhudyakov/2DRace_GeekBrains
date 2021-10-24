@@ -2,46 +2,49 @@
 using UnityEngine;
 using UnityEngine.Advertisements;
 
-public class UnityAdsTools : MonoBehaviour, IAdsShower, IUnityAdsListener
+namespace Tools.Ads
 {
-    private string _gameId = "4410945";
-    private string _rewardPalce = "Rewarded_Android";
-    private string _interstitialPlace = "Interstitial_Android";
-
-    private Action _callbackSuccessShowVideo;
-
-    private void Start()
+    public class UnityAdsTools : MonoBehaviour, IAdsShower, IUnityAdsListener
     {
-        Advertisement.Initialize(_gameId, true);
-    }
+        private string _gameId = "4410945";
+        private string _rewardPalce = "Rewarded_Android";
+        private string _interstitialPlace = "Interstitial_Android";
 
-    public void OnUnityAdsDidError(string message)
-    {
-    }
+        private Action _callbackSuccessShowVideo;
 
-    public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
-    {
-        if (showResult == ShowResult.Finished)
-            _callbackSuccessShowVideo?.Invoke();
-    }
+        private void Start()
+        {
+            Advertisement.Initialize(_gameId, true);
+        }
 
-    public void OnUnityAdsDidStart(string placementId)
-    {
-    }
+        public void OnUnityAdsDidError(string message)
+        {
+        }
 
-    public void OnUnityAdsReady(string placementId)
-    {
-    }
+        public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
+        {
+            if (showResult == ShowResult.Finished)
+                _callbackSuccessShowVideo?.Invoke();
+        }
 
-    public void ShowInterstitial()
-    {
-        _callbackSuccessShowVideo = null;
-        Advertisement.Show(_interstitialPlace);
-    }
+        public void OnUnityAdsDidStart(string placementId)
+        {
+        }
 
-    public void ShowVideo(Action successShow)
-    {
-        _callbackSuccessShowVideo = successShow;
-        Advertisement.Show(_rewardPalce);
+        public void OnUnityAdsReady(string placementId)
+        {
+        }
+
+        public void ShowInterstitial()
+        {
+            _callbackSuccessShowVideo = null;
+            Advertisement.Show(_interstitialPlace);
+        }
+
+        public void ShowVideo(Action successShow)
+        {
+            _callbackSuccessShowVideo = successShow;
+            Advertisement.Show(_rewardPalce);
+        }
     }
 }

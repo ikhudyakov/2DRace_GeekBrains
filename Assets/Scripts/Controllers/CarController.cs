@@ -1,13 +1,19 @@
-﻿using UnityEngine;
+﻿using Model;
+using Tools;
+using UnityEngine;
+using Views;
 
-public class CarController : BaseController
+namespace Controllers
 {
-    private ResourcePath carPath = new ResourcePath() { Path = "Prefabs/Car" };
-
-    public CarController(PlayerData model)
+    public class CarController : BaseController
     {
-        var go = ResourceLoader.LoadGameObject(carPath);
-        var car = GameObject.Instantiate(go).GetComponent<CarView>();
-        AddGameObjects(car.gameObject);
+        private ResourcePath carPath = new ResourcePath() { Path = "Prefabs/Car" };
+
+        public CarController(PlayerData model)
+        {
+            var go = ResourceLoader.LoadGameObject(carPath);
+            var car = GameObject.Instantiate(go).GetComponent<CarView>();
+            AddGameObjects(car.gameObject);
+        }
     }
 }

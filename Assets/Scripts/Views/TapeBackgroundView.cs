@@ -1,27 +1,30 @@
-﻿using UnityEngine;
+﻿using Tools;
+using UnityEngine;
 
-public class TapeBackgroundView : MonoBehaviour
+namespace Views
 {
-    [SerializeField]
-    private Background[] _backgrounds;
-
-    private IReadOnlySubscriptionProperty<float> _diff;
-
-    public void Init(IReadOnlySubscriptionProperty<float> diff)
+    public class TapeBackgroundView : MonoBehaviour
     {
-        _diff = diff;
-        _diff.Subscribe(Move);
-    }
+        [SerializeField]
+        private Background[] _backgrounds;
 
-    protected void OnDestroy()
-    {
-        _diff?.Subscribe(Move);
-    }
+        private IReadOnlySubscriptionProperty<float> _diff;
 
-    private void Move(float value)
-    {
-        foreach (var background in _backgrounds)
-            background.Move(-value);
+        public void Init(IReadOnlySubscriptionProperty<float> diff)
+        {
+            _diff = diff;
+            _diff.Subscribe(Move);
+        }
+
+        protected void OnDestroy()
+        {
+            _diff?.Subscribe(Move);
+        }
+
+        private void Move(float value)
+        {
+            foreach (var background in _backgrounds)
+                background.Move(-value);
+        }
     }
 }
-

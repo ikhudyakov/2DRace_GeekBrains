@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 
-public interface IAnalyticTools 
+namespace Model.Analytic
 {
-    void SendMessage(string alias, IDictionary<string, object> eventData = null);
+    public interface IAnalyticTools
+    {
+        void SendMessage(string alias, IDictionary<string, object> eventData = null);
+    }
 }

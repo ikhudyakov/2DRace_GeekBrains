@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 
-public static class ResourceLoader
+namespace Tools
 {
-    public static GameObject LoadGameObject(ResourcePath path)
+    public static class ResourceLoader
     {
-        return Resources.Load<GameObject>(path.Path);
+        public static GameObject LoadGameObject(ResourcePath path)
+        {
+            return Resources.Load<GameObject>(path.Path);
+        }
     }
 }

@@ -1,17 +1,23 @@
-﻿public class GameController : BaseController
+﻿using Model;
+using Tools;
+
+namespace Controllers
 {
-    public GameController(PlayerData model)
+    public class GameController : BaseController
     {
-        var leftMoveDiff = new SubscriptionProperty<float>();
-        var rightMoveDiff = new SubscriptionProperty<float>();
+        public GameController(PlayerData model)
+        {
+            var leftMoveDiff = new SubscriptionProperty<float>();
+            var rightMoveDiff = new SubscriptionProperty<float>();
 
-        var tapeBackgroundController = new TapeBackgroundController(leftMoveDiff, rightMoveDiff);
-        AddController(tapeBackgroundController);
+            var tapeBackgroundController = new TapeBackgroundController(leftMoveDiff, rightMoveDiff);
+            AddController(tapeBackgroundController);
 
-        var inputGameController = new InputGameController(leftMoveDiff, rightMoveDiff, model.CurrentCar);
-        AddController(inputGameController);
+            var inputGameController = new InputGameController(leftMoveDiff, rightMoveDiff, model.CurrentCar);
+            AddController(inputGameController);
 
-        var carController = new CarController(model);
-        AddController(carController);
+            var carController = new CarController(model);
+            AddController(carController);
+        }
     }
 }
