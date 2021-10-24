@@ -1,27 +1,31 @@
-﻿using UnityEngine;
+﻿using System;
+using Tools;
+using UnityEngine;
 
-public class BaseInputView : MonoBehaviour
+namespace Views
 {
-    public virtual void Init(SubscriptionProperty<float> leftMove, SubscriptionProperty<float> rightMove, float speed)
+    public class BaseInputView : MonoBehaviour
     {
-        _leftMove = leftMove;
-        _rightMove = rightMove;
-        _speed = speed;
+        public virtual void Init(SubscriptionProperty<float> leftMove, SubscriptionProperty<float> rightMove, float speed)
+        {
+            _leftMove = leftMove;
+            _rightMove = rightMove;
+            _speed = speed;
+        }
+
+        protected float _speed;
+        private SubscriptionProperty<float> _leftMove;
+        private SubscriptionProperty<float> _rightMove;
+
+        protected virtual void OnLeftMove(float value)
+        {
+            _leftMove.Value = value;
+        }
+
+        protected virtual void OnRightMove(float value)
+        {
+            _rightMove.Value = value;
+        }
+
     }
-
-
-    protected float _speed;
-    private SubscriptionProperty<float> _leftMove;
-    private SubscriptionProperty<float> _rightMove;
-
-    protected virtual void OnLeftMove(float value)
-    {
-        _leftMove.Value = value;
-    }
-
-    protected virtual void OnRightMove(float value)
-    {
-        _rightMove.Value = value;
-    }
-
 }

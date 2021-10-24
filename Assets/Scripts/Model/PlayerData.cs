@@ -1,18 +1,28 @@
-public class PlayerData
+using Garage;
+using Model.Analytic;
+using Tools;
+
+namespace Model
 {
-    public PlayerData(float carSpeed, IAnalyticTools analytic)
+    public class PlayerData
     {
-        CurrentCar = new Car(carSpeed);
-        Analytic = analytic;
-        Gold = 0;
+        public PlayerData(float carSpeed, IAnalyticTools analytic)
+        {
+            State = new SubscriptionProperty<GameState>();
+            CurrentCar = new Car(carSpeed);
+            Analytic = analytic;
+            Gold = new SubscriptionProperty<int>();
+            NoADS = new SubscriptionProperty<int>();
+        }
+
+        public SubscriptionProperty<int> Gold { get; }
+        public SubscriptionProperty<int> NoADS { get; }
+        public Car CurrentCar { get; }
+
+        public SubscriptionProperty<GameState> State { get; }
+
+        public IAnalyticTools Analytic { get; }
+
+        public ShopTools ShopTools { get; }
     }
-
-    public int Gold { get; set; }
-    public Car CurrentCar { get; }
-
-    public SubscriptionProperty<GameState> State { get; set; } = new SubscriptionProperty<GameState>();
-
-    public IAnalyticTools Analytic { get; }
-
-    public ShopTools ShopTools { get; }
 }

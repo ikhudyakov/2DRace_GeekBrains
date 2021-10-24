@@ -1,6 +1,9 @@
-﻿public enum GameState
+﻿namespace Model
 {
-    None,
-    Start,
-    Game
+    public enum GameState
+    {
+        None,
+        Start,
+        Game
+    }
 }

@@ -1,7 +1,10 @@
 using System;
 
-public interface IAdsShower
+namespace Tools.Ads
 {
-    void ShowInterstitial();
-    void ShowVideo(Action onSuccess);
+    public interface IAdsShower
+    {
+        void ShowInterstitial();
+        void ShowVideo(Action onSuccess);
+    }
 }

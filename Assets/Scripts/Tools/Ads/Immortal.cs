@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
-public class Immortal : MonoBehaviour
+namespace Tools.Ads
 {
+    public class Immortal : MonoBehaviour
+    {
 
+    }
 }

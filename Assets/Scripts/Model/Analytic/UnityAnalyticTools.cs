@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
 
-public class UnityAnalyticTools : IAnalyticTools
+namespace Model.Analytic
 {
-    public void SendMessage(string alias, IDictionary<string, object> eventData)
+    public class UnityAnalyticTools : IAnalyticTools
     {
-        if (eventData == null)
-            eventData = new Dictionary<string, object>();
-        UnityEngine.Analytics.Analytics.CustomEvent(alias, eventData);
+        public void SendMessage(string alias, IDictionary<string, object> eventData)
+        {
+            if (eventData == null)
+                eventData = new Dictionary<string, object>();
+            UnityEngine.Analytics.Analytics.CustomEvent(alias, eventData);
+        }
     }
 }

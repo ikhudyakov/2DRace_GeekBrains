@@ -1,7 +1,13 @@
-﻿using UnityEngine.Purchasing;
+﻿using System;
+using UnityEngine.Purchasing;
 
-public class ShopProduct
+namespace Model
 {
-    public string Id;
-    public ProductType CurrentProductType;
+    [Serializable]
+    public class ShopProduct
+    {
+        public string Id;
+        public ProductType CurrentProductType;
+        public ProductModification Modification;
+    }
 }

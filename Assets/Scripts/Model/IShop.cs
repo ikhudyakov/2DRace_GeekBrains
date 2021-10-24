@@ -1,8 +1,13 @@
-﻿public interface IShop
+﻿using Tools;
+
+namespace Model
 {
-    void Buy(string id);
-    string GetCost(string productID);
-    void RestorePurchase();
-    IReadOnlySubscriptionAction OnSuccessPurchase { get; }
-    IReadOnlySubscriptionAction OnFailedPurchase { get; }
+    public interface IShop
+    {
+        void Buy(string id);
+        string GetCost(string productID);
+        void RestorePurchase();
+        IReadOnlySubscriptionProperty<string> OnSuccessPurchase { get; }
+        IReadOnlySubscriptionAction OnFailedPurchase { get; }
+    }
 }
