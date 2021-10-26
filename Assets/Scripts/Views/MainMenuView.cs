@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using Model;
+using Garage;
+using JoostenProductions;
 
 namespace Views
 {
@@ -12,12 +14,21 @@ namespace Views
         [SerializeField] private Button _showRewardedButton;
         [SerializeField] private Button _buyGoldButton;
         [SerializeField] private Button _noAdsButton;
+        [SerializeField] private Button _garageButton;
         [SerializeField] private Text _goldAmount;
         [SerializeField] private Text _noAds;
+        [SerializeField] private GarageView _garage;
+
+        private void Start()
+        {
+            _garage = FindObjectOfType<GarageView>();
+            _garage.gameObject.SetActive(false);
+        }
 
         public void Init(UnityAction startGame, UnityAction rewardAdRequested, PlayerData model, UnityAction<string> purchaseRequested)
         {
             _startButton?.onClick.AddListener(startGame);
+            _garageButton?.onClick.AddListener(OpenGarage);
             _buyGoldButton?.onClick.AddListener(delegate { purchaseRequested("1_gold"); });
             if (model.NoADS.Value == 0)
             {
@@ -29,6 +40,11 @@ namespace Views
                 _showRewardedButton.gameObject.SetActive(false);
                 _noAdsButton.gameObject.SetActive(false);
             }
+        }
+
+        public void OpenGarage()
+        {
+            _garage.gameObject.SetActive(true);
         }
 
         protected void OnDestroy()

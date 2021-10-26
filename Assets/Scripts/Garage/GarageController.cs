@@ -4,6 +4,7 @@ using Items;
 using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.Linq;
+using Tools;
 using UnityEngine;
 
 namespace Garage
@@ -15,8 +16,11 @@ namespace Garage
         private readonly UpgradeHandlersRepository _upgradeHandlersRepository;
         private readonly ItemRepository _upgradeItemsRepository;
         private readonly InventoryModel _inventoryModel;
+        private ResourcePath garagePath = new ResourcePath() { Path = "Prefabs/garage" };
+        private GarageView _view;
 
-        public GarageController([NotNull] List<UpgradeItemConfig> upgradeItemConfigs, [NotNull] Car car)
+
+        public GarageController(Transform canvasParent, [NotNull] List<UpgradeItemConfig> upgradeItemConfigs, [NotNull] Car car)
         {
             _car = car;
 
@@ -28,7 +32,18 @@ namespace Garage
 
             _inventoryModel = new InventoryModel();
             _inventoryModel.EquipItem(_upgradeItemsRepository.Items[1]);
+
+            _view = CreateView(canvasParent);
+            _view.Init(Upgrade, Exit);
         }
+        private GarageView CreateView(Transform parent)
+        {
+            var go = ResourceLoader.LoadGameObject(garagePath);
+            var viewGo = GameObject.Instantiate(go, parent);
+            var view = viewGo.GetComponent<GarageView>();
+            return view;
+        }
+
 
         public void Enter()
         {
@@ -36,6 +51,11 @@ namespace Garage
         }
 
         public void Exit()
+        {
+            _view.gameObject.SetActive(false);
+        }
+
+        public void Upgrade()
         {
             UpgradeCarWithEquippedItems(_car, _inventoryModel.GetEquippedItems(), _upgradeHandlersRepository.UpgradeItems);
             Debug.Log($"Exit: car has speed : {_car.Speed}");

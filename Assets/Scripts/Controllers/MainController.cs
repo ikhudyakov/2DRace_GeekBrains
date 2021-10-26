@@ -1,4 +1,5 @@
-﻿using Garage;
+﻿using Ability;
+using Garage;
 using Inventory;
 using Model;
 using System;
@@ -50,21 +51,23 @@ namespace Controllers
                     break;
                 case GameState.Start:
                     _gameController?.Dispose();
-                    _gameController = null;
                     _menuController = new MainMenuController(_uiRoot, _model, _adsShower, _shop);
+                    AddController(_menuController);
+                    _garageController = new GarageController(_uiRoot, _upgradeItemConfig, _model.CurrentCar);
+                    _gameController = null;
+                    AddController(_garageController);
                     break;
                 case GameState.Game:
                     _inventoryController = new InventoryController(_itemConfig);
                     _inventoryController.ShowInventory();
                     AddController(_inventoryController);
-
                     _model.Analytic.SendMessage("StartGameActivity", new Dictionary<string, object>());
+                    _garageController?.Dispose();
                     _menuController?.Dispose();
-                    _menuController = null;
                     _gameController = new GameController(_model);
-                    _garageController = new GarageController(_upgradeItemConfig, _model.CurrentCar);
-                    _garageController.Enter();
-                    _garageController.Exit();
+                    AddController(_gameController);
+                    _garageController = null;
+                    _menuController = null;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
