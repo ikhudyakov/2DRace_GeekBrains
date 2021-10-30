@@ -19,7 +19,6 @@ namespace Controllers
         private PurchaseController _purchaseController;
         private GameController _gameController;
         private InventoryController _inventoryController;
-        private GarageController _garageController;
         private IShop _shop;
         private readonly List<ItemConfig> _itemConfig;
         private readonly List<UpgradeItemConfig> _upgradeItemConfig;
@@ -51,22 +50,18 @@ namespace Controllers
                     break;
                 case GameState.Start:
                     _gameController?.Dispose();
-                    _menuController = new MainMenuController(_uiRoot, _model, _adsShower, _shop);
+                    _menuController = new MainMenuController(_uiRoot, _model, _adsShower, _shop, _upgradeItemConfig);
                     AddController(_menuController);
-                    _garageController = new GarageController(_uiRoot, _upgradeItemConfig, _model.CurrentCar);
                     _gameController = null;
-                    AddController(_garageController);
                     break;
                 case GameState.Game:
                     _inventoryController = new InventoryController(_itemConfig);
                     _inventoryController.ShowInventory();
                     AddController(_inventoryController);
                     _model.Analytic.SendMessage("StartGameActivity", new Dictionary<string, object>());
-                    _garageController?.Dispose();
                     _menuController?.Dispose();
                     _gameController = new GameController(_model);
                     AddController(_gameController);
-                    _garageController = null;
                     _menuController = null;
                     break;
                 default:
