@@ -4,7 +4,6 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using Model;
 using Garage;
-using JoostenProductions;
 
 namespace Views
 {
@@ -19,14 +18,10 @@ namespace Views
         [SerializeField] private Text _noAds;
         [SerializeField] private GarageView _garage;
 
-        private void Start()
+        public void Init(UnityAction startGame, UnityAction rewardAdRequested, PlayerData model, UnityAction<string> purchaseRequested, GarageController garage)
         {
-            _garage = FindObjectOfType<GarageView>();
+            _garage = garage.View;
             _garage.gameObject.SetActive(false);
-        }
-
-        public void Init(UnityAction startGame, UnityAction rewardAdRequested, PlayerData model, UnityAction<string> purchaseRequested)
-        {
             _startButton?.onClick.AddListener(startGame);
             _garageButton?.onClick.AddListener(OpenGarage);
             _buyGoldButton?.onClick.AddListener(delegate { purchaseRequested("1_gold"); });

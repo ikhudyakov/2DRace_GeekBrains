@@ -3,6 +3,9 @@ using Tools;
 using Tools.Ads;
 using UnityEngine;
 using Views;
+using Garage;
+using System.Collections.Generic;
+using Inventory;
 
 namespace Controllers
 {
@@ -14,8 +17,9 @@ namespace Controllers
         private ResourcePath trailTouchViewPath = new ResourcePath() { Path = "Prefabs/trailTouchView" };
         private IShop _shop;
         private MainMenuView _view;
+        private GarageController _garageController;
 
-        public MainMenuController(Transform canvasParent, PlayerData model, IAdsShower adsShower, IShop shop)
+        public MainMenuController(Transform canvasParent, PlayerData model, IAdsShower adsShower, IShop shop, List<UpgradeItemConfig> upgradeItemConfig)
         {
             _model = model;
             _adsShower = adsShower;
@@ -24,7 +28,8 @@ namespace Controllers
             AddGameObjects(_view.gameObject);
             var trailView = CreateTrailTouchView(canvasParent);
             trailView.Init();
-            _view.Init(StartGame, ShowAddRequested, _model, PurchaseRequested);
+            _garageController = new GarageController(canvasParent, upgradeItemConfig, model.CurrentCar);
+            _view.Init(StartGame, ShowAddRequested, _model, PurchaseRequested, _garageController);
             _model.Gold.Subscribe(OnGoldChanged);
             _view.UpdateGold(_model.Gold.Value);
             _model.NoADS.Subscribe(OnNoADSChanged);

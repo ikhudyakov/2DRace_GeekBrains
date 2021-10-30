@@ -19,6 +19,7 @@ namespace Garage
         private ResourcePath garagePath = new ResourcePath() { Path = "Prefabs/garage" };
         private GarageView _view;
 
+        internal GarageView View { get => _view; }
 
         public GarageController(Transform canvasParent, [NotNull] List<UpgradeItemConfig> upgradeItemConfigs, [NotNull] Car car)
         {
