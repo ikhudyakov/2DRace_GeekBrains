@@ -1,6 +1,7 @@
 ﻿using Model;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Controllers
 {
@@ -31,9 +32,11 @@ namespace Controllers
                     break;
                 case ModificationType.Gold:
                     _model.Gold.Value += modification.Value;
+                    PlayerPrefs.SetInt("Gold", _model.Gold.Value);
                     break;
                 case ModificationType.NoADS:
                     _model.NoADS.Value += modification.Value;
+                    PlayerPrefs.SetInt("NoADS", _model.NoADS.Value);
                     break;
                 default:
                     break;

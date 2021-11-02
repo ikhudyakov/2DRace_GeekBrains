@@ -1,6 +1,7 @@
 using Garage;
 using Model.Analytic;
 using Tools;
+using UnityEngine;
 
 namespace Model
 {
@@ -13,6 +14,16 @@ namespace Model
             Analytic = analytic;
             Gold = new SubscriptionProperty<int>();
             NoADS = new SubscriptionProperty<int>();
+
+            if (PlayerPrefs.HasKey("Gold"))
+            {
+                Gold.Value = PlayerPrefs.GetInt("Gold");
+            }
+            
+            if (PlayerPrefs.HasKey("NoADS"))
+            {
+                NoADS.Value = PlayerPrefs.GetInt("NoADS");
+            }
         }
 
         public SubscriptionProperty<int> Gold { get; }

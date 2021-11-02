@@ -29,7 +29,7 @@ namespace Controllers
             var trailView = CreateTrailTouchView(canvasParent);
             trailView.Init();
             _garageController = new GarageController(canvasParent, upgradeItemConfig, model.CurrentCar);
-            _view.Init(StartGame, ShowAddRequested, _model, PurchaseRequested, _garageController);
+            _view.Init(StartGame, ShowAddRequested, _model, PurchaseRequested, _garageController, ResetPurchase);
             _model.Gold.Subscribe(OnGoldChanged);
             _view.UpdateGold(_model.Gold.Value);
             _model.NoADS.Subscribe(OnNoADSChanged);
@@ -51,6 +51,14 @@ namespace Controllers
         private void PurchaseRequested(string productId)
         {
             _shop.Buy(productId);
+        }
+        
+        private void ResetPurchase()
+        {
+            _shop.RestorePurchase();
+            PlayerPrefs.SetInt("NoADS", 0);
+            _model.NoADS.Value = 0;
+            _view.UpdateNoADS(0);
         }
 
         private void StartGame()
