@@ -4,6 +4,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using Model;
 using Garage;
+using DG.Tweening;
 
 namespace Views
 {
@@ -41,7 +42,7 @@ namespace Views
 
         public void OpenGarage()
         {
-            _garage.gameObject.SetActive(true);
+            _garage.Show();
         }
 
         protected void OnDestroy()
@@ -55,8 +56,13 @@ namespace Views
 
         public void UpdateGold(int goldValue)
         {
-            if(_goldAmount != null)
-                _goldAmount.text = goldValue.ToString();
+            if (_goldAmount != null)
+            {
+                DOVirtual.Int(int.Parse(_goldAmount.text), goldValue, 2f, (v) =>
+                {
+                    _goldAmount.text = v.ToString();
+                });
+            }
         }
 
         public void UpdateNoADS(int noAdsValue)

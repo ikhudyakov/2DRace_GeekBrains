@@ -35,7 +35,7 @@ namespace Garage
             _inventoryModel.EquipItem(_upgradeItemsRepository.Items[1]);
 
             _view = CreateView(canvasParent);
-            _view.Init(Upgrade, Exit);
+            _view.Init(Upgrade);
         }
         private GarageView CreateView(Transform parent)
         {
