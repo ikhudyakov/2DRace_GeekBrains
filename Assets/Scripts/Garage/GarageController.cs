@@ -45,6 +45,10 @@ namespace Garage
             return view;
         }
 
+        protected override void OnDispose()
+        {
+            GameObject.Destroy(_view.gameObject);
+        }
 
         public void Enter()
         {

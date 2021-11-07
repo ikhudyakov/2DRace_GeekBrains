@@ -347,6 +347,7 @@ GameObject:
   - component: {fileID: 1719446191}
   - component: {fileID: 1719446195}
   - component: {fileID: 1719446194}
+  - component: {fileID: 1719446196}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -430,7 +431,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -476,3 +477,11 @@ MonoBehaviour:
     Modification:
       Type: 3
       Value: 1
+--- !u!222 &1719446196
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719446189}
+  m_CullTransparentMesh: 1
