@@ -6,6 +6,7 @@ using Views;
 using Garage;
 using System.Collections.Generic;
 using Inventory;
+using System;
 
 namespace Controllers
 {
@@ -14,7 +15,6 @@ namespace Controllers
         private readonly PlayerData _model;
         private readonly IAdsShower _adsShower;
         private ResourcePath mainMenuPath = new ResourcePath() { Path = "Prefabs/mainMenu" };
-        private ResourcePath trailTouchViewPath = new ResourcePath() { Path = "Prefabs/trailTouchView" };
         private IShop _shop;
         private MainMenuView _view;
         private GarageController _garageController;
@@ -26,14 +26,22 @@ namespace Controllers
             _shop = shop;
             _view = CreateView(canvasParent);
             AddGameObjects(_view.gameObject);
-            var trailView = CreateTrailTouchView(canvasParent);
-            trailView.Init();
             _garageController = new GarageController(canvasParent, upgradeItemConfig, model.CurrentCar);
-            _view.Init(StartGame, ShowAddRequested, _model, PurchaseRequested, _garageController, ResetPurchase);
+            _view.Init(StartGame, ShowAddRequested, _model, PurchaseRequested, _garageController, ResetPurchase, Daily, Exit);
             _model.Gold.Subscribe(OnGoldChanged);
             _view.UpdateGold(_model.Gold.Value);
             _model.NoADS.Subscribe(OnNoADSChanged);
             _view.UpdateNoADS(_model.NoADS.Value);
+        }
+
+        private void Exit()
+        {
+            Application.Quit();
+        }
+
+        private void Daily()
+        {
+            _model.State.Value = GameState.Daily;
         }
 
         private void OnNoADSChanged(int value)
@@ -75,14 +83,6 @@ namespace Controllers
             return view;
         }
 
-        private TrailTouchView CreateTrailTouchView(Transform parent)
-        {
-            var go = ResourceLoader.LoadGameObject(trailTouchViewPath);
-            var viewGo = GameObject.Instantiate(go, parent);
-            var view = viewGo.GetComponent<TrailTouchView>();
-            return view;
-        }
-
         private void ShowAddRequested()
         {
             if(_model.NoADS.Value == 0)
@@ -92,6 +92,11 @@ namespace Controllers
         private void OnVideoShowSucces()
         {
             Debug.Log("Success");
+        }
+
+        protected override void OnDispose()
+        {
+            _garageController.Dispose();
         }
     }
 }
