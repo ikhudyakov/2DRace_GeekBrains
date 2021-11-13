@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Prefabs
+  m_EditorClassIdentifier: 
+  m_GroupName: Prefabs
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 4c2ad81f306cdfc4eaf295e34d75d778
+  m_SerializeEntries:
+  - m_GUID: e16790ec1c349e241aa6f812b11b0d5f
+    m_Address: Prefabs/DailyRewardWindow
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reward
+    m_MainAsset: {fileID: 8008249255676124129, guid: e16790ec1c349e241aa6f812b11b0d5f, type: 3}
+    m_TargetAsset: {fileID: 8008249255676124129, guid: e16790ec1c349e241aa6f812b11b0d5f, type: 3}
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 0fc843f4bfda09f4b92c3d574dbdf3af, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 0e04a158d180fb042a5ba1c1e7cad34d, type: 2}
+    - {fileID: 11400000, guid: d06dd9105389c0344905457b8a4fd105, type: 2}

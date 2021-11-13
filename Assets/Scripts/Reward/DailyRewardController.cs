@@ -1,3 +1,4 @@
+using Bundle;
 using Controllers;
 using Model;
 using Reward.Views;
@@ -6,27 +7,39 @@ using System.Collections;
 using System.Collections.Generic;
 using Tools;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using Views;
 
 namespace Reward.Controllers
 {
     public class DailyRewardController : BaseController
     {
-        private readonly DailyRewardView _dailyRewardView;
+        private DailyRewardView _dailyRewardView;
         private PlayerData _model;
+        private readonly Transform _placeForUi;
         private List<SlotRewardView> _slots;
 
         private bool _rewardReceived = false;
         private int _timer = 0;
 
-        public DailyRewardController(PlayerData model, ResourcePath rewardViewResource, Transform placeForUi)
+        private GameObject _goDailyRewardView;
+
+        public DailyRewardController(PlayerData model, string rewardViewResource, Transform placeForUi)
         {
-            var go = ResourceLoader.LoadGameObject(rewardViewResource);
-            var prefab = go.GetComponent<DailyRewardView>();
-            _dailyRewardView = GameObject.Instantiate(prefab, placeForUi);
+            Addressables.LoadAssetAsync<GameObject>(rewardViewResource).Completed += OnLoadDone;
+            _model = model;
+            _placeForUi = placeForUi;
+        }
+
+        private void OnLoadDone(AsyncOperationHandle<GameObject> obj)
+        {
+            _goDailyRewardView = obj.Result;
+            _addressablePrefabs.Add(obj);
+            var prefab = _goDailyRewardView.GetComponent<DailyRewardView>();
+            _dailyRewardView = GameObject.Instantiate(prefab, _placeForUi);
             AddGameObjects(_dailyRewardView.gameObject);
             RefreshView();
-            _model = model;
         }
 
         private void RefreshView()
@@ -137,7 +150,6 @@ namespace Reward.Controllers
             _dailyRewardView.LastRewardTime = DateTime.UtcNow;
             _dailyRewardView.CurrentActiveSlot = (_dailyRewardView.CurrentActiveSlot + 1) % _dailyRewardView.Rewards.Count;
             RefreshRewardsState();
-
         }
     }
 }
