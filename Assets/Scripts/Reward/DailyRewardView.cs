@@ -1,3 +1,4 @@
+using Bundle;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Reward.Views
 {
-    public class DailyRewardView : MonoBehaviour
+    public class DailyRewardView : AssetBundleViewBase
     {
         private const string LastTimeKey = "LastRewardTime";
         private const string ActiveSlotKey = "ActiveSlot";
@@ -51,6 +52,11 @@ namespace Reward.Views
         public Button ExitButton => _exitButton;
         public Image AwardBar => _awardBar;
 
+        private void Start()
+        {
+            LoadAssets();
+        }
+
         public int CurrentActiveSlot
         {
             get => PlayerPrefs.GetInt(ActiveSlotKey);
@@ -73,6 +79,11 @@ namespace Reward.Views
                 else
                     PlayerPrefs.DeleteKey(LastTimeKey);
             }
+        }
+
+        private void LoadAssets()
+        {
+            StartCoroutine(DownloadAndSetAssetBundle());
         }
 
 

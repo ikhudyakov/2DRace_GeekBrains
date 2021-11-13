@@ -30,8 +30,8 @@ namespace Controllers
         private readonly List<UpgradeItemConfig> _upgradeItemConfig;
 
         private ResourcePath trailTouchViewPath = new ResourcePath() { Path = "Prefabs/trailTouchView" };
-        private ResourcePath RewardViewPath = new ResourcePath() { Path = "Prefabs/DailyRewardWindow" };
         private ResourcePath FightViewPath = new ResourcePath() { Path = "Prefabs/FightWindowView" };
+        private String RewardViewPath = "Prefabs/DailyRewardWindow";
 
         public MainController(
             PlayerData model, 

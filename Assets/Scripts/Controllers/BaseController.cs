@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Controllers
 {
@@ -8,6 +10,7 @@ namespace Controllers
     {
         private readonly List<BaseController> _controllers = new List<BaseController>();
         private readonly List<GameObject> _gameObjects = new List<GameObject>();
+        protected List<AsyncOperationHandle<GameObject>> _addressablePrefabs = new List<AsyncOperationHandle<GameObject>>();
 
         private bool _isDisposed;
 
@@ -19,6 +22,11 @@ namespace Controllers
             _isDisposed = true;
 
             OnDispose();
+
+            foreach (var addressablePrefab in _addressablePrefabs)
+                Addressables.ReleaseInstance(addressablePrefab);
+
+            _addressablePrefabs.Clear();
 
             foreach (var controller in _controllers)
                 controller?.Dispose();
@@ -43,6 +51,7 @@ namespace Controllers
 
         protected virtual void OnDispose()
         {
+
         }
     }
 }
