@@ -18,6 +18,8 @@ namespace Views
         [SerializeField] private Button _resetPurchases;
         [SerializeField] private Button _dailyRewardButton;
         [SerializeField] private Button _exitButton;
+        [SerializeField] private Button _languageButton;
+        [SerializeField] private GameObject _languagePanel;
         [SerializeField] private Text _goldAmount;
         [SerializeField] private Text _noAds;
         [SerializeField] private GarageView _garage;
@@ -53,6 +55,8 @@ namespace Views
                 _showRewardedButton.gameObject.SetActive(false);
                 _noAdsButton.gameObject.SetActive(false);
             }
+            _languageButton.onClick.AddListener(() => _languagePanel.GetComponent<LocalizationView>().Show());
+            _languagePanel.SetActive(false);
         }
 
         public void OpenGarage()
@@ -70,6 +74,7 @@ namespace Views
             _resetPurchases.onClick.RemoveAllListeners();
             _dailyRewardButton.onClick.RemoveAllListeners();
             _exitButton.onClick.RemoveAllListeners();
+            _languageButton.onClick.RemoveAllListeners();
         }
 
         public void UpdateGold(int goldValue)

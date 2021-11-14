@@ -14,9 +14,7 @@ namespace Reward.Views
 
         #region Fields
         [Header("Time Settings")]
-        [SerializeField]
         private int _timeCooldown = 86400;
-        [SerializeField]
         private int _timeDeadline = 172800;
 
         [Space]
@@ -55,7 +53,7 @@ namespace Reward.Views
         private void Start()
         {
             LoadAssets();
-        }
+    }
 
         public int CurrentActiveSlot
         {

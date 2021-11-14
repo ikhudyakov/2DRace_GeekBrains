@@ -70,28 +70,39 @@ namespace Reward.Controllers
         private void RefreshRewardsState()
         {
             _rewardReceived = false;
-            _timer = 0;
             if (_dailyRewardView.LastRewardTime.HasValue)
             {
                 var timeSpan = DateTime.UtcNow - _dailyRewardView.LastRewardTime.Value;
                 if (timeSpan.Seconds > _dailyRewardView.TimeDeadline)
                 {
-                    _dailyRewardView.LastRewardTime = null;
-                    _dailyRewardView.CurrentActiveSlot = 0;
+                    ResetReward();
                 }
                 else if (timeSpan.Seconds < _dailyRewardView.TimeCooldown)
                 {
                     _rewardReceived = true;
-                    _timer = _dailyRewardView.TimeCooldown - timeSpan.Seconds;
                 }
             }
         }
 
         private void RefreshUi()
         {
-            _dailyRewardView.RewardTimer.text = $"Time new award:  {_timer.ToString()}";
             _dailyRewardView.GetRewardButton.interactable = !_rewardReceived;
 
+            if (!_rewardReceived)
+            {
+                _dailyRewardView.RewardTimer.text = "Time to get your reward";
+            }
+            else
+            {
+                if (_dailyRewardView.LastRewardTime != null)
+                {
+                    var nextClaimTime = _dailyRewardView.LastRewardTime.Value.AddSeconds(_dailyRewardView.TimeCooldown);
+                    var currentClaimCooldown = nextClaimTime - DateTime.UtcNow;
+                    var timeGetReward = $"{currentClaimCooldown.Hours:D2}:{currentClaimCooldown.Minutes:D2}:{currentClaimCooldown.Seconds:D2}";
+
+                    _dailyRewardView.RewardTimer.text = $"Next reward: {timeGetReward}";
+                }
+            }
             for (int i = 0; i < _dailyRewardView.Rewards.Count; i++)
             {
                 _slots[i].SetData(_dailyRewardView.Rewards[i], i + 1, i <= _dailyRewardView.CurrentActiveSlot);
@@ -126,6 +137,7 @@ namespace Reward.Controllers
         {
             _dailyRewardView.LastRewardTime = null;
             _dailyRewardView.CurrentActiveSlot = 0;
+            Notification.CancelNotoficationAndroid();
         }
 
         private void ClaimReward()
@@ -149,6 +161,8 @@ namespace Reward.Controllers
 
             _dailyRewardView.LastRewardTime = DateTime.UtcNow;
             _dailyRewardView.CurrentActiveSlot = (_dailyRewardView.CurrentActiveSlot + 1) % _dailyRewardView.Rewards.Count;
+            Notification.CancelNotoficationAndroid();
+            Notification.CreateNotifications("Get Daily Reward!", "Enter the game and get free crystals");
             RefreshRewardsState();
         }
     }
