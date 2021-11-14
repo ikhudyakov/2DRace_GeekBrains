@@ -12,7 +12,7 @@ namespace Bundle
         private DataSpriteBundle[] _dataSpriteBundles;
 
         private AssetBundle _spritesAssetBundle;
-        private CachedAssetBundle cachedAssetBundle = new CachedAssetBundle("Version", new Hash128(3L, 3L));
+        private CachedAssetBundle cachedAssetBundle = new CachedAssetBundle("Version", new Hash128(4L, 4L));
 
         protected IEnumerator DownloadAndSetAssetBundle()
         {
