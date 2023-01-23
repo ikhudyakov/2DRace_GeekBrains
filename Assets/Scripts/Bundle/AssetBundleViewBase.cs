@@ -6,13 +6,14 @@ namespace Bundle
 {
     public class AssetBundleViewBase : MonoBehaviour
     {
-        private const string UrlAssetBundleRewardSprites = "https://cloud.ilei.ml/index.php/s/zlZUEQMNp2PqHA2/download";
+        //private const string UrlAssetBundleRewardSprites = "https://drive.google.com/uc?export=download&id=1xJb5_M2T2yQ5wwlUZvMkMkbEA0i564L_";
+        private const string UrlAssetBundleRewardSprites = "http://ilei.ml/reward_bundle";
 
         [SerializeField]
         private DataSpriteBundle[] _dataSpriteBundles;
 
         private AssetBundle _spritesAssetBundle;
-        private CachedAssetBundle cachedAssetBundle = new CachedAssetBundle("Version", new Hash128(4L, 4L));
+        private CachedAssetBundle cachedAssetBundle = new CachedAssetBundle("Version", new Hash128(5L, 5L));
 
         protected IEnumerator DownloadAndSetAssetBundle()
         {
@@ -38,7 +39,7 @@ namespace Bundle
 
         private IEnumerator GetSpritesAssetBundle()
         {
-            var request = UnityWebRequestAssetBundle.GetAssetBundle(UrlAssetBundleRewardSprites, cachedAssetBundle);
+            var request = UnityWebRequestAssetBundle.GetAssetBundle(UrlAssetBundleRewardSprites);
 
             yield return request.SendWebRequest();
 
@@ -58,6 +59,7 @@ namespace Bundle
             else
             {
                 Debug.LogError(request.error);
+                Debug.LogError("Ошибка");
             }
         }
     }

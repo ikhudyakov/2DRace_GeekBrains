@@ -1,15 +1,12 @@
-using Bundle;
 using Controllers;
 using Model;
 using Reward.Views;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Tools;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using Views;
 
 namespace Reward.Controllers
 {
@@ -20,8 +17,7 @@ namespace Reward.Controllers
         private readonly Transform _placeForUi;
         private List<SlotRewardView> _slots;
 
-        private bool _rewardReceived = false;
-        private int _timer = 0;
+        private bool _isGetReward = false;
 
         private GameObject _goDailyRewardView;
 
@@ -69,26 +65,26 @@ namespace Reward.Controllers
 
         private void RefreshRewardsState()
         {
-            _rewardReceived = false;
+            _isGetReward = true;
             if (_dailyRewardView.LastRewardTime.HasValue)
             {
                 var timeSpan = DateTime.UtcNow - _dailyRewardView.LastRewardTime.Value;
-                if (timeSpan.Seconds > _dailyRewardView.TimeDeadline)
+                if (timeSpan.TotalSeconds > _dailyRewardView.TimeDeadline)
                 {
                     ResetReward();
                 }
-                else if (timeSpan.Seconds < _dailyRewardView.TimeCooldown)
+                else if (timeSpan.TotalSeconds < _dailyRewardView.TimeCooldown)
                 {
-                    _rewardReceived = true;
+                    _isGetReward = false;
                 }
             }
         }
 
         private void RefreshUi()
         {
-            _dailyRewardView.GetRewardButton.interactable = !_rewardReceived;
+            _dailyRewardView.GetRewardButton.interactable = _isGetReward;
 
-            if (!_rewardReceived)
+            if (_isGetReward)
             {
                 _dailyRewardView.RewardTimer.text = "Time to get your reward";
             }
@@ -103,7 +99,7 @@ namespace Reward.Controllers
                     _dailyRewardView.RewardTimer.text = $"Next reward: {timeGetReward}";
                 }
             }
-            for (int i = 0; i < _dailyRewardView.Rewards.Count; i++)
+            for (int i = 0; i < _slots.Count; i++)
             {
                 _slots[i].SetData(_dailyRewardView.Rewards[i], i + 1, i <= _dailyRewardView.CurrentActiveSlot);
             }
@@ -142,7 +138,7 @@ namespace Reward.Controllers
 
         private void ClaimReward()
         {
-            if (_rewardReceived)
+            if (!_isGetReward)
                 return;
             var reward = _dailyRewardView.Rewards[_dailyRewardView.CurrentActiveSlot];
             switch (reward.Type)
